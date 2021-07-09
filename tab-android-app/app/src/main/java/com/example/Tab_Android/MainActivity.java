@@ -1,6 +1,8 @@
 package com.example.Tab_Android;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -10,7 +12,7 @@ import com.example.Tab_Android.Tab1.Frag1;
 
 import com.google.android.material.tabs.TabLayout;
 
-public class TabActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Main_Activity";
     private TabLayout tabLayout;
@@ -40,4 +42,6 @@ public class TabActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setText("Community");
 
     }
+
+
 }

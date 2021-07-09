@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -18,22 +18,24 @@
         android:theme="@style/Theme.ViewPagerExample"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB529yYfuW1-z2xvQ-x7_AZ9aYFDTctRzk" />
 
-        <activity
-            android:exported="true"
-            android:name=".TabActivity">
-            <intent-filter>
-                <action
-                    android:name="android.intent.action.MAIN" />
 
-                <category
-                    android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
