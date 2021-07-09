@@ -18,23 +18,22 @@
         android:theme="@style/Theme.ViewPagerExample"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".LoginActivity">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyB529yYfuW1-z2xvQ-x7_AZ9aYFDTctRzk" />
+
+        <activity
+            android:name=".TabActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"/>
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB529yYfuW1-z2xvQ-x7_AZ9aYFDTctRzk" />
-
+        <activity android:name=".loginAndSignUP.JoinActivity"></activity>
+        <activity android:name=".loginAndSignUP.LoginActivity"></activity>
 
     </application>
 
