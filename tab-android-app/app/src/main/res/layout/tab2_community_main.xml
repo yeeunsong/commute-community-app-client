@@ -5,36 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/picture2"
-        android:layout_width="230dp"
-        android:layout_height="150dp"
-        android:src="@drawable/kaist_cats"
-        android:tag="2"
-        app:layout_constraintBottom_toTopOf="@+id/mRecyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.309" />
-
     <TextView
         android:id="@+id/test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
         android:layout_marginBottom="47dp"
         android:text="Sign UP"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/mRecyclerView"
+        app:layout_constraintBottom_toTopOf="@+id/tab2RecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/picture2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mRecyclerView"
+        android:id="@+id/tab2RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:scrollbarFadeDuration="0"
@@ -63,6 +48,17 @@
         android:layout_marginEnd="224dp"
         android:text="Register"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="186dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="logout"
+        app:layout_constraintBottom_toTopOf="@+id/test"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
