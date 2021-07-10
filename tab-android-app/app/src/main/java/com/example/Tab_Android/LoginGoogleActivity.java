@@ -16,7 +16,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginGoogleActivity extends AppCompatActivity {
 
     SignInButton signInButton;
     GoogleSignInClient mGoogleSignInClient;
@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_googlelogin);
 
         signInButton = (SignInButton) findViewById(R.id.signin);
 
