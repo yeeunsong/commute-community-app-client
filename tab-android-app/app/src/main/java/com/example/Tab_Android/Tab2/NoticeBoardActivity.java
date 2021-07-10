@@ -14,9 +14,15 @@ import com.example.Tab_Android.RetrofitClient;
 import com.example.Tab_Android.loginAndSignUP.LogSignServiceApi;
 import com.example.Tab_Android.loginAndSignUP.LoginActivity;
 import com.example.Tab_Android.loginAndSignUP.LoginResponse;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,6 +35,7 @@ public class NoticeBoardActivity extends AppCompatActivity {
     private ArrayList<TableData> cItemList = new ArrayList<>();
     RecyclerView.Adapter contentListAdapter;
     RecyclerView.LayoutManager layoutManager;
+    JsonParser jsonParser = new JsonParser();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +64,20 @@ public class NoticeBoardActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ShowPostResponse> call, Response<ShowPostResponse> response) {
                 ShowPostResponse result = response.body();
-                Toast.makeText(context, result.getResult().toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, result.getresult().get(0).toString(), Toast.LENGTH_SHORT).show();
+                JsonParser jsonParser = new JsonParser();
 
-                finish();
+                //;
+                /*
+                JsonObject jsonobj = arrayToString(result.getresult());
+
+                    String userid = jsonobj.get("userid").toString();
+                    String title = jsonobj.get("title").toString();
+                    String datetime = jsonobj.get("datetime").toString();
+
+                   */
+                contentListAdapter.notifyDataSetChanged();
+                //finish();
             }
 
             @Override
@@ -70,5 +88,15 @@ public class NoticeBoardActivity extends AppCompatActivity {
             }
         });
     }
+
+    public static <T> String arrayToString(ArrayList<T> list) {
+        Gson g = new Gson();
+        return g.toJson(list); }
+
+    public static <T> List<T> stringToArray(String s, Class<T[]> clazz) {
+        T[] arr = new Gson().fromJson(s, clazz);
+        return Arrays.asList(arr);
+        //or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner }
+
 
 }

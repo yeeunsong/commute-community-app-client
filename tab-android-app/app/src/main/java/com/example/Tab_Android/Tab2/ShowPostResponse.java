@@ -15,8 +15,8 @@ public class ShowPostResponse {
     public int getCode() {
         return code;
     }
-
-    public ArrayList getResult() {
+    public ArrayList getresult() {
         return result;
     }
+
 }
