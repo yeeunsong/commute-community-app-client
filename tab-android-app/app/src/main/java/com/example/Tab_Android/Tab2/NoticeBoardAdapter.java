@@ -1,6 +1,5 @@
 package com.example.Tab_Android.Tab2;
 
-import android.util.SparseBooleanArray;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,25 +14,20 @@ import com.example.Tab_Android.R;
 
 import java.util.ArrayList;
 
-public class TableAdapter extends RecyclerView.Adapter<TableAdapter.CustomViewHolder> {
-
+public class NoticeBoardAdapter extends RecyclerView.Adapter<NoticeBoardAdapter.CustomViewHolder> {
     private ArrayList<TableData> mList;
-    private OnItemClickListener onItemClickListener=null;
 
-    public TableAdapter(ArrayList<TableData> list) {
-        this.mList = list;
-    }
+    public NoticeBoardAdapter(ArrayList<TableData> mSearchData) { this.mList = mSearchData; }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
-        protected TextView name;
+        protected TextView nbname;//notice board name
 
         public CustomViewHolder(View view) {
             super(view);
-            this.name = (TextView) view.findViewById(R.id.name);
+            this.nbname = (TextView) view.findViewById(R.id.nbname);
 
         }
     }
-
     public ArrayList<TableData> getData() {
         return mList;
     }
@@ -42,11 +36,13 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.CustomViewHo
         void onClick(String name);
     }
 
+    private OnItemClickListener onItemClickListener;
+
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.tab2_mainlist, viewGroup, false);
+                .inflate(R.layout.tab2_noticeboardlist, viewGroup, false);
 
         CustomViewHolder viewHolder = new CustomViewHolder(view);
 
@@ -56,20 +52,22 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.CustomViewHo
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
-        viewholder.name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
-        viewholder.name.setGravity(Gravity.CENTER);
-        viewholder.name.setText(mList.get(position).getName());
 
-        viewholder.name.setOnClickListener(new View.OnClickListener() {
+        viewholder.nbname.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onItemClickListener!=null){
+                if (onItemClickListener != null) {
                     onItemClickListener.onClick(mList.get(position).getName());
                 }
             }
         });
 
+        viewholder.nbname.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        viewholder.nbname.setGravity(Gravity.CENTER);
+        viewholder.nbname.setText(mList.get(position).getName());
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -80,4 +78,3 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.CustomViewHo
         this.onItemClickListener=onItemClickListener;
     }
 }
-

@@ -33,6 +33,10 @@
         </activity>
         <activity android:name=".loginAndSignUP.LoginActivity" />
         <activity android:name=".loginAndSignUP.JoinActivity" />
+<<<<<<< HEAD
+=======
+        <activity android:name=".Tab2.NoticeBoardActivity" />
+>>>>>>> 783005024f0fcb5eb6412153ed053341cfdae75a
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

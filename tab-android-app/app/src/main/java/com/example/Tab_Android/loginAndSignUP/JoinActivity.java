@@ -26,7 +26,7 @@ public class JoinActivity extends AppCompatActivity {
     private EditText mNameView;
     private Button mJoinButton;
     private ProgressBar mProgressView;
-    private ServiceApi service;
+    private LogSignServiceApi service;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class JoinActivity extends AppCompatActivity {
         mJoinButton = (Button) findViewById(R.id.join_button);
         mProgressView = (ProgressBar) findViewById(R.id.join_progress);
 
-        service = RetrofitClient.getClient().create(ServiceApi.class);
+        service = RetrofitClient.getClient().create(LogSignServiceApi.class);
 
         mJoinButton.setOnClickListener(new View.OnClickListener() {
             @Override

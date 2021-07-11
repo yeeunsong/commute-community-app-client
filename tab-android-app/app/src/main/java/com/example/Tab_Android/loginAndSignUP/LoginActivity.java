@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button mEmailLoginButton;
     private Button mJoinButton;
     private ProgressBar mProgressView;
-    private ServiceApi service;
+    private LogSignServiceApi service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         mJoinButton = (Button) findViewById(R.id.join_button);
         mProgressView = (ProgressBar) findViewById(R.id.login_progress);
 
-        service = RetrofitClient.getClient().create(ServiceApi.class);
+        service = RetrofitClient.getClient().create(LogSignServiceApi.class);
 
         mEmailLoginButton.setOnClickListener(new OnClickListener() {
             @Override
