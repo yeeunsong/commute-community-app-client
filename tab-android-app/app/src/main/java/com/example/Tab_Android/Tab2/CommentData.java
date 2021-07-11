@@ -1,13 +1,13 @@
 package com.example.Tab_Android.Tab2;
 
-public class TableData {
+public class CommentData {
     private String name,title,date;
 
     public String getName() {
         return name;
     }
 
-    public TableData(String name, String title, String date) {
+    public CommentData(String name, String title, String date) {
         this.name = name;
         this.title = title;
         this.date = date;
@@ -36,4 +36,7 @@ public class TableData {
     public void setDate(String date) {
         this.date = date;
     }
+
 }
+
+

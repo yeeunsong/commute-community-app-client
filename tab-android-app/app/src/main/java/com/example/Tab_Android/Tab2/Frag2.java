@@ -100,7 +100,7 @@ public class Frag2 extends Fragment {
         mAdapter.setOnItemClickListener(new Frag2Adapter.OnItemClickListener() {
             @Override
             public void onClick(String name) {
-                Intent intent = new Intent(getActivity(), NoticeBoardActivity.class)
+                Intent intent = new Intent(getActivity(), ShowBoardActivity.class)
                         .putExtra("nbname",name);
                 startActivityForResult(intent,0);
                 //Toast.makeText(getActivity(), "되냐?", Toast.LENGTH_LONG).show();
