@@ -18,10 +18,10 @@
         android:theme="@style/Theme.ViewPagerExample"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".LoginGoogleActivity">
-        </activity>
-
-
+        <activity android:name=".Tab1.OffActivity"></activity>
+        <activity android:name=".Tab1.ArrivalActivity" />
+        <activity android:name=".Tab1.CommuteActivity" />
+        <activity android:name=".LoginGoogleActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -31,20 +31,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".loginAndSignUP.LoginActivity" />
         <activity android:name=".loginAndSignUP.JoinActivity" />
-
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB529yYfuW1-z2xvQ-x7_AZ9aYFDTctRzk" />
-
-
     </application>
 
 </manifest>
-
-
-
-

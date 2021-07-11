@@ -3,6 +3,7 @@ package com.example.Tab_Android.Tab1;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -94,6 +95,7 @@ public class Frag1 extends Fragment {
         commute_time = (TextView) view.findViewById(R.id.commute_time);
         leave_time = (TextView) view.findViewById(R.id.leave_time);
         totalcommute = (TextView) view.findViewById(R.id.totalcommute);
+
         commute_button.setOnClickListener( new View.OnClickListener() {
             DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
             @SuppressLint("SetTextI18n")
@@ -108,9 +110,12 @@ public class Frag1 extends Fragment {
                         leave_time.setText("퇴근시각: ");
                         interval_time.setText("총 " + Long.toString(0) + "초 근무했습니다");
 
+                        // Start ArrivalActivity
+                        ArrivalPressed();
+
                         isCommuted = true;
                         setButtonUI("Leave", R.color.red);
-                        Toast.makeText(view.getContext(),"출근 완료",Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(view.getContext(),"출근 완료",Toast.LENGTH_SHORT).show();
                     }
                     else{
                         long temp = clicktime;
@@ -120,7 +125,7 @@ public class Frag1 extends Fragment {
                         long intervaltime = (date.getTime() - tempdate.getTime())/1000+1;
 
                         if(intervaltime <= 1){
-                            Toast.makeText(view.getContext(),"엥 벌써 퇴근하시게요..?",Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(view.getContext(),"엥 벌써 퇴근하시게요..?",Toast.LENGTH_SHORT).show();
                         }
                         else if(intervaltime > 15){
                             String string_s = ""+intervaltime;
@@ -131,7 +136,7 @@ public class Frag1 extends Fragment {
                             SpannableStringBuilder sp = new SpannableStringBuilder(total_work);
                             sp.setSpan(new ForegroundColorSpan(Color.parseColor("#8B0000")), 2, (2+string_s.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                            Toast.makeText(view.getContext(), toomuchwork ,Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(view.getContext(), toomuchwork ,Toast.LENGTH_SHORT).show();
                             String leavetime = dateFormat.format(date);
                             leave_time.setText("퇴근시각: "+leavetime);
                             interval_time.setText(sp);
@@ -151,7 +156,7 @@ public class Frag1 extends Fragment {
                             isCommuted=false;
                             totalcommute.setText("총 "+(++totalcommuted)+"회 출근");
                             setButtonUI("Commute", R.color.green);
-                            Toast.makeText(view.getContext(),"퇴근 완료",Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(view.getContext(),"퇴근 완료",Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -289,6 +294,11 @@ public class Frag1 extends Fragment {
 
         // after generating our bitmap we are returning our bitmap.
         return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
+    private void ArrivalPressed(){
+        Intent intent = new Intent(getActivity(), ArrivalActivity.class);
+        startActivity(intent);
     }
 }
 
