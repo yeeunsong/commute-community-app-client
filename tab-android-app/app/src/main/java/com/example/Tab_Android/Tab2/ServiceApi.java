@@ -9,4 +9,6 @@ public interface ServiceApi {
     Call<ShowBoardResponse> showBoardlist(@Body ShowBoardData data);
     @POST("showpost")
     Call<ShowPostResponse> showPost(@Body ShowPostData data);
+    @POST("writepost")
+    Call<WritePostResponse> writePost(@Body WritePostData data);
 }

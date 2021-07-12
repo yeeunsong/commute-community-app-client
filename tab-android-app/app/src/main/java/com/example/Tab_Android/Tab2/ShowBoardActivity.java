@@ -51,7 +51,7 @@ public class ShowBoardActivity extends AppCompatActivity {
             @Override
             public void onClick(int postid) {
                 //System.out.println("postid"+postid);
-                Intent intent = new Intent(context, PostActivity.class)
+                Intent intent = new Intent(context, ShowPostActivity.class)
                         .putExtra("postid",postid);
                 startActivityForResult(intent,1);
             }
@@ -92,5 +92,4 @@ public class ShowBoardActivity extends AppCompatActivity {
             }
         });
     }
-
 }

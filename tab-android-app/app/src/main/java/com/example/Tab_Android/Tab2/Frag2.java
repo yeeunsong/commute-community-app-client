@@ -2,11 +2,13 @@ package com.example.Tab_Android.Tab2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,8 +19,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.Tab_Android.R;
 import com.example.Tab_Android.RetrofitClient;
 import com.example.Tab_Android.loginAndSignUP.LogSignServiceApi;
+import com.example.Tab_Android.loginAndSignUP.LogoutResponse;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 //외부에서 new Frag2 호출 시
 public class Frag2 extends Fragment {
@@ -78,21 +85,21 @@ public class Frag2 extends Fragment {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
+
                 //logout
-                service.userLogout().enqueue(new Callback() {
+                service.userLogout().enqueue(new Callback<LogoutResponse>() {
                     @Override
-                    public void onResponse(Call call, Response response) {
+                    public void onResponse(Call<LogoutResponse> call, Response<LogoutResponse> response) {
                         //LoginResponse result = response.body();
                         Toast.makeText(getContext(), "로그아웃 성공!", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onFailure(Call call, Throwable t) {
+                    public void onFailure(Call<LogoutResponse> call, Throwable t) {
                         Toast.makeText(getContext(), "로그아웃 에러 발생", Toast.LENGTH_SHORT).show();
                         Log.e("로그아웃 에러 발생", t.getMessage());
                     }
-                });*/
+                });
 
             }
         });

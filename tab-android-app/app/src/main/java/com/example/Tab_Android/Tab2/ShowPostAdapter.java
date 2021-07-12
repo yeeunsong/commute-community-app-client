@@ -14,7 +14,7 @@ import com.example.Tab_Android.R;
 
 import java.util.ArrayList;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHolder> {
+public class ShowPostAdapter extends RecyclerView.Adapter<ShowPostAdapter.CustomViewHolder> {
     private ArrayList<CommentData> mList;
     private OnItemClickListener onItemClickListener;
 
@@ -26,7 +26,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.CustomViewHold
         void onClick(String name);
     }
 
-    public PostAdapter(ArrayList<CommentData> mSearchData) { this.mList = mSearchData; }
+    public ShowPostAdapter(ArrayList<CommentData> mSearchData) { this.mList = mSearchData; }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         protected TextView title;//notice board name

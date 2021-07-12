@@ -1,7 +1,11 @@
 package com.example.Tab_Android.loginAndSignUP;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import androidx.preference.PreferenceManager;
+
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -27,7 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button mJoinButton;
     private ProgressBar mProgressView;
     private LogSignServiceApi service;
-
+    private SharedPreferences sharedPref;
+    private SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +42,11 @@ public class LoginActivity extends AppCompatActivity {
         mEmailLoginButton = (Button) findViewById(R.id.login_button);
         mJoinButton = (Button) findViewById(R.id.join_button);
         mProgressView = (ProgressBar) findViewById(R.id.login_progress);
-
+        sharedPref = getSharedPreferences("userid",Context.MODE_PRIVATE);
         service = RetrofitClient.getClient().create(LogSignServiceApi.class);
+        editor = sharedPref.edit();
+
+
 
         mEmailLoginButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -101,6 +109,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 LoginResponse result = response.body();
                 Toast.makeText(LoginActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+
+                editor = sharedPref.edit();
+                editor.putString("userid",result.getUserId());
+                editor.commit();
+                Toast.makeText(LoginActivity.this, sharedPref.getString("userid","doomed?"), Toast.LENGTH_SHORT).show();
                 showProgress(false);
                 finish();
             }

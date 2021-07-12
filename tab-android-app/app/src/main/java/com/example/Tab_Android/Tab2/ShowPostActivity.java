@@ -16,15 +16,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PostActivity extends AppCompatActivity {
+public class ShowPostActivity extends AppCompatActivity {
     Context context;
     TextView titleview, nameview, dateview, contentview;
 
@@ -32,7 +30,7 @@ public class PostActivity extends AppCompatActivity {
     private ServiceApi service;
     private RecyclerView commentRecyclerView; // 리스트뷰
     private ArrayList<CommentData> cItemList = new ArrayList<>();
-    PostAdapter commentAdapter;
+    ShowPostAdapter commentAdapter;
     RecyclerView.LayoutManager layoutManager;
     JsonParser jsonParser = new JsonParser();
 
@@ -54,7 +52,7 @@ public class PostActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         commentRecyclerView.setLayoutManager(layoutManager);
 
-        commentAdapter = new PostAdapter(cItemList);
+        commentAdapter = new ShowPostAdapter(cItemList);
 
         commentRecyclerView.setAdapter(commentAdapter); // 어댑터를 리스트뷰에 세팅
 
