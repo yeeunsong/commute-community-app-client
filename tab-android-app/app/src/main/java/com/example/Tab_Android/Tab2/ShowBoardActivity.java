@@ -92,18 +92,4 @@ public class ShowBoardActivity extends AppCompatActivity {
             }
         });
     }
-
-<<<<<<< HEAD:tab-android-app/app/src/main/java/com/example/Tab_Android/Tab2/NoticeBoardActivity.java
-    public static <T> String arrayToString(ArrayList<T> list) {
-        Gson g = new Gson();
-        return g.toJson(list); }
-
-    public static <T> List<T> stringToArray(String s, Class<T[]> clazz) {
-        T[] arr = new Gson().fromJson(s, clazz);
-        return Arrays.asList(arr);
-        //or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner }
-    }
-
-=======
->>>>>>> 4607231ff78d555050718775c53d630ed00f578b:tab-android-app/app/src/main/java/com/example/Tab_Android/Tab2/ShowBoardActivity.java
 }
