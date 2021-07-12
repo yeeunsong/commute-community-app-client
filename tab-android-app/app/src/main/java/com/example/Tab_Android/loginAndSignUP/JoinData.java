@@ -12,9 +12,13 @@ public class JoinData {
     @SerializedName("userPwd")
     private String userPwd;
 
-    public JoinData(String userName, String userEmail, String userPwd) {
+    @SerializedName("userCompany")
+    private String userCompany;
+
+    public JoinData(String userName, String userEmail, String userPwd, String userCompany) {
         this.userName = userName;
         this.userEmail = userEmail;
         this.userPwd = userPwd;
+        this.userCompany = userCompany;
     }
 }
