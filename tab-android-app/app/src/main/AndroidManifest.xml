@@ -18,16 +18,18 @@
         android:theme="@style/Theme.ViewPagerExample"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-
-        <activity android:name=".LoginGoogleActivity" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+        <activity android:name=".FirstPopupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".LoginGoogleActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
         </activity>
         <activity android:name=".loginAndSignUP.LoginActivity" />
         <activity android:name=".loginAndSignUP.JoinActivity" />
