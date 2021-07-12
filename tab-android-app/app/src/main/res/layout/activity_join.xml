@@ -17,18 +17,19 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/join_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="이메일"
-                    android:inputType="textEmailAddress"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -59,6 +60,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="이름"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/join_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="회사명"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />

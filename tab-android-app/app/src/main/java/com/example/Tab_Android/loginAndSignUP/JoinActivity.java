@@ -24,9 +24,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class JoinActivity extends AppCompatActivity {
-    private AutoCompleteTextView mEmailView;
+    private EditText mEmailView;
     private EditText mPasswordView;
     private EditText mNameView;
+    private EditText mCompanyView;
     private Button mJoinButton;
     private ProgressBar mProgressView;
     private LogSignServiceApi service;
@@ -36,9 +37,11 @@ public class JoinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
 
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.join_email);
+        mEmailView = (EditText) findViewById(R.id.join_email);
         mPasswordView = (EditText) findViewById(R.id.join_password);
         mNameView = (EditText) findViewById(R.id.join_name);
+        mCompanyView = (EditText) findViewById(R.id.join_company);
+
         mJoinButton = (Button) findViewById(R.id.join_button);
         mProgressView = (ProgressBar) findViewById(R.id.join_progress);
 
@@ -56,10 +59,12 @@ public class JoinActivity extends AppCompatActivity {
         mNameView.setError(null);
         mEmailView.setError(null);
         mPasswordView.setError(null);
+        mCompanyView.setError(null);
 
         String name = mNameView.getText().toString();
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
+        String company = mCompanyView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -93,10 +98,18 @@ public class JoinActivity extends AppCompatActivity {
             cancel = true;
         }
 
+        // 회사명의 유효성 검사
+        if (company.isEmpty()) {
+            mCompanyView.setError("회사명을 입력해주세요.");
+            focusView = mCompanyView;
+            cancel = true;
+        }
+
+
         if (cancel) {
             focusView.requestFocus();
         } else {
-            startJoin(new JoinData(name, email, password));
+            startJoin(new JoinData(name, email, password, company));
             showProgress(true);
         }
     }

@@ -52,6 +52,7 @@ import java.util.Date;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import user.UserData;
 
 
 public class Frag1 extends Fragment {
@@ -68,7 +69,7 @@ public class Frag1 extends Fragment {
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
 
-    String id = "yeeun";
+    String id = UserData.getUserId();
 
     double lat1 =36.37418, long1 = 127.3659; //Location of the company
     double lat2=0, long2=0; //Location of the user
@@ -184,7 +185,7 @@ public class Frag1 extends Fragment {
                     Toast.makeText(view.getContext(), "Response Error: Code "+response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Toast.makeText(view.getContext(),"Arrive to work",Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(),"Arrive to work: " + id,Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -206,7 +207,7 @@ public class Frag1 extends Fragment {
                     Toast.makeText(view.getContext(), "Response Error: Code "+response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                Toast.makeText(view.getContext(),"Leave from work",Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(),"Leave from work: " +id ,Toast.LENGTH_SHORT).show();
             }
 
             @Override

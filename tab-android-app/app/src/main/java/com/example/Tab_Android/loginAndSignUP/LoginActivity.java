@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.preference.PreferenceManager;
+
 
 import android.util.Log;
 import android.view.View;
@@ -24,9 +24,10 @@ import com.example.Tab_Android.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import user.UserData;
 
 public class LoginActivity extends AppCompatActivity {
-    private AutoCompleteTextView mEmailView;
+    private EditText mEmailView;
     private EditText mPasswordView;
     private Button mEmailLoginButton;
     private Button mJoinButton;
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.login_email);
+        mEmailView = (EditText) findViewById(R.id.login_email);
         mPasswordView = (EditText) findViewById(R.id.login_password);
         mEmailLoginButton = (Button) findViewById(R.id.login_button);
         mJoinButton = (Button) findViewById(R.id.join_button);
@@ -110,18 +111,19 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 LoginResponse result = response.body();
                 Toast.makeText(LoginActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
-
+                /*
                 editor = sharedPref.edit();
                 editor.putString("userid",result.getUserId());
                 editor.commit();
                 Toast.makeText(LoginActivity.this, sharedPref.getString("userid","doomed?"), Toast.LENGTH_SHORT).show();
+                */
                 showProgress(false);
                 if (result.getCode()==200) {
-
+                    registerUserData(result);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 }
-                Log.i("code", String.valueOf(response.code()));
+
             }
 
             @Override
@@ -143,6 +145,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showProgress(boolean show) {
         mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    private void registerUserData (LoginResponse result){
+        // fetch userdata from database
+        UserData userData = new UserData();
+        UserData.setUserEmail(result.getUserEmail());
+        UserData.setUserId(result.getUserId());
+        userData.setUserCompany(result.getUserCompany());
+
     }
 }
 

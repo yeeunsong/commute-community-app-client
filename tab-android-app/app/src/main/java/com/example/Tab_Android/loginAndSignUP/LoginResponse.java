@@ -12,6 +12,12 @@ public class LoginResponse {
     @SerializedName("userId")
     private String userId;
 
+    @SerializedName("userCompany")
+    private String userCompany;
+
+    @SerializedName("userEmail")
+    private String userEmail;
+
     public int getCode() {
         return code;
     }
@@ -22,5 +28,13 @@ public class LoginResponse {
 
     public String getUserId() {
         return userId;
+    }
+
+    public String getUserCompany() {
+        return userCompany;
+    }
+
+    public String getUserEmail(){
+        return userEmail;
     }
 }
