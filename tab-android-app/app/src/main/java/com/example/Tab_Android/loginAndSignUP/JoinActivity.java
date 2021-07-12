@@ -1,5 +1,7 @@
 package com.example.Tab_Android.loginAndSignUP;
 
+import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.Tab_Android.MainActivity;
 import com.example.Tab_Android.R;
 import com.example.Tab_Android.RetrofitClient;
 
@@ -109,6 +112,9 @@ public class JoinActivity extends AppCompatActivity {
                 if (result.getCode() == 200) {
                     finish();
                 }
+
+                Intent intent = new Intent(JoinActivity.this, MainActivity.class);
+                startActivity(intent);
             }
 
             @Override

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.Tab_Android.MainActivity;
 import com.example.Tab_Android.R;
 import com.example.Tab_Android.RetrofitClient;
 
@@ -115,7 +116,12 @@ public class LoginActivity extends AppCompatActivity {
                 editor.commit();
                 Toast.makeText(LoginActivity.this, sharedPref.getString("userid","doomed?"), Toast.LENGTH_SHORT).show();
                 showProgress(false);
-                finish();
+                if (result.getCode()==200) {
+
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
+                Log.i("code", String.valueOf(response.code()));
             }
 
             @Override
