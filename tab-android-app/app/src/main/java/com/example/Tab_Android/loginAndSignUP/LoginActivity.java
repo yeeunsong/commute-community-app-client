@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         mEmailLoginButton = (Button) findViewById(R.id.login_button);
         mJoinButton = (Button) findViewById(R.id.join_button);
         mProgressView = (ProgressBar) findViewById(R.id.login_progress);
-        sharedPref = getSharedPreferences("userid",Context.MODE_PRIVATE);
+        sharedPref = getSharedPreferences("sharedpref",Context.MODE_PRIVATE);
         service = RetrofitClient.getClient().create(LogSignServiceApi.class);
         editor = sharedPref.edit();
 

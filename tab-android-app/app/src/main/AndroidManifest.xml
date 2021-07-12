@@ -33,9 +33,10 @@
         </activity>
         <activity android:name=".loginAndSignUP.LoginActivity" />
         <activity android:name=".loginAndSignUP.JoinActivity" />
-        <activity android:name=".Tab2.ShowBoardActivity" />
+        <activity android:name=".Tab2.ShowBoardActivity"
+            android:theme="@style/AppTheme" />
         <activity android:name=".Tab2.ShowPostActivity" />
-
+        <activity android:name=".Tab2.WritePostActivity" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB529yYfuW1-z2xvQ-x7_AZ9aYFDTctRzk" />

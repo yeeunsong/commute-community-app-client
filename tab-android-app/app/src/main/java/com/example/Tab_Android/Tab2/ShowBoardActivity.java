@@ -1,17 +1,23 @@
 package com.example.Tab_Android.Tab2;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.Tab_Android.R;
 import com.example.Tab_Android.RetrofitClient;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -29,12 +35,18 @@ public class ShowBoardActivity extends AppCompatActivity {
     private RecyclerView listView; // 리스트뷰
     private ArrayList<BoardData> cItemList = new ArrayList<>();
     ShowBoardAdapter contentListAdapter;
+    private FloatingActionButton fab_writingpost;
     RecyclerView.LayoutManager layoutManager;
-    JsonParser jsonParser = new JsonParser();
+
 
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab2_noticeboard);
+
+
+
+        String nbname = getIntent().getExtras().getString("nbname");
         context = this.getBaseContext();
         service = RetrofitClient.getClient().create(ServiceApi.class);
         listView = (RecyclerView) findViewById(R.id.tableRecyclerView);
@@ -44,8 +56,22 @@ public class ShowBoardActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listView.setLayoutManager(layoutManager);
 
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle(nbname);
+
+        setSupportActionBar(toolbar);
+
         contentListAdapter = new ShowBoardAdapter(cItemList);
         listView.setAdapter(contentListAdapter); // 어댑터를 리스트뷰에 세팅
+
+        SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                contentListAdapter.notifyDataSetChanged();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         contentListAdapter.setOnItemClickListener(new ShowBoardAdapter.OnItemClickListener() {
             @Override
@@ -56,7 +82,16 @@ public class ShowBoardActivity extends AppCompatActivity {
                 startActivityForResult(intent,1);
             }
         });
-        
+        fab_writingpost = (FloatingActionButton) findViewById(R.id.fab_writingpost);
+
+        fab_writingpost.setOnClickListener(new AdapterView.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, WritePostActivity.class);
+                startActivityForResult(intent,2);
+            }
+        });
+
         init();
     }
 
@@ -91,5 +126,16 @@ public class ShowBoardActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 2) {//writing psot
+            if (resultCode != Activity.RESULT_OK) {
+                return;
+            }
+            init();
+        }
     }
 }
