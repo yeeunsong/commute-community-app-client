@@ -50,6 +50,9 @@ public class Frag2Adapter extends RecyclerView.Adapter<Frag2Adapter.CustomViewHo
         return viewHolder;
     }
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener=onItemClickListener;
+    }
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
@@ -75,7 +78,5 @@ public class Frag2Adapter extends RecyclerView.Adapter<Frag2Adapter.CustomViewHo
         return (null != mList ? mList.size() : 0);
     }
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
-        this.onItemClickListener=onItemClickListener;
-    }
+
 }

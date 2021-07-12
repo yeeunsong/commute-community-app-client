@@ -1,6 +1,7 @@
 package com.example.Tab_Android.Tab2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,29 +12,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.Tab_Android.R;
 import com.example.Tab_Android.RetrofitClient;
-import com.example.Tab_Android.loginAndSignUP.LogSignServiceApi;
-import com.example.Tab_Android.loginAndSignUP.LoginActivity;
-import com.example.Tab_Android.loginAndSignUP.LoginResponse;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NoticeBoardActivity extends AppCompatActivity {
+public class ShowBoardActivity extends AppCompatActivity {
     Context context;
     private ServiceApi service;
     private RecyclerView listView; // 리스트뷰
-    private ArrayList<TableData> cItemList = new ArrayList<>();
-    RecyclerView.Adapter contentListAdapter;
+    private ArrayList<BoardData> cItemList = new ArrayList<>();
+    ShowBoardAdapter contentListAdapter;
     RecyclerView.LayoutManager layoutManager;
     JsonParser jsonParser = new JsonParser();
 
@@ -49,39 +44,48 @@ public class NoticeBoardActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listView.setLayoutManager(layoutManager);
 
-        contentListAdapter = new NoticeBoardAdapter(cItemList);
-
+        contentListAdapter = new ShowBoardAdapter(cItemList);
         listView.setAdapter(contentListAdapter); // 어댑터를 리스트뷰에 세팅
+
+        contentListAdapter.setOnItemClickListener(new ShowBoardAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int postid) {
+                //System.out.println("postid"+postid);
+                Intent intent = new Intent(context, PostActivity.class)
+                        .putExtra("postid",postid);
+                startActivityForResult(intent,1);
+            }
+        });
+        
         init();
     }
 
     private void init(){
-        GetPostData(new ShowPostData(0,getIntent().getStringExtra("nbname")));
+        GetPostData(new ShowBoardData(0,getIntent().getStringExtra("nbname")));
     }
 
-    private void GetPostData(ShowPostData data) {
-        service.showpostlist(data).enqueue(new Callback<ShowPostResponse>() {
+    private void GetPostData(ShowBoardData data) {
+        service.showBoardlist(data).enqueue(new Callback<ShowBoardResponse>() {
             @Override
-            public void onResponse(Call<ShowPostResponse> call, Response<ShowPostResponse> response) {
-                ShowPostResponse result = response.body();
-                Toast.makeText(context, result.getresult().get(0).toString(), Toast.LENGTH_SHORT).show();
-                JsonParser jsonParser = new JsonParser();
+            public void onResponse(Call<ShowBoardResponse> call, Response<ShowBoardResponse> response) {
+                ShowBoardResponse result = response.body();
+                //Toast.makeText(context, result.getresult().get(0).getClass().getName(), Toast.LENGTH_SHORT).show();
+                Gson gson = new Gson();
+                for(int i=0;i<result.getresult().size();i++){
+                    JsonObject jsonObject = gson.toJsonTree(result.getresult().get(i)).getAsJsonObject();
+                    int postid = (int) Float.parseFloat(jsonObject.get("postid").toString());
+                    String userid = jsonObject.get("userid").toString();
+                    String title = jsonObject.get("title").toString();
+                    String datetime = jsonObject.get("datetime").toString();
+                    cItemList.add(new BoardData(postid,userid,title,datetime));
+                }
 
-                //;
-                /*
-                JsonObject jsonobj = arrayToString(result.getresult());
-
-                    String userid = jsonobj.get("userid").toString();
-                    String title = jsonobj.get("title").toString();
-                    String datetime = jsonobj.get("datetime").toString();
-
-                   */
                 contentListAdapter.notifyDataSetChanged();
                 //finish();
             }
 
             @Override
-            public void onFailure(Call<ShowPostResponse> call, Throwable t) {
+            public void onFailure(Call<ShowBoardResponse> call, Throwable t) {
                 Toast.makeText(context, "로그인 에러 발생", Toast.LENGTH_SHORT).show();
                 Log.e("로그인 에러 발생", t.getMessage());
 
@@ -89,6 +93,7 @@ public class NoticeBoardActivity extends AppCompatActivity {
         });
     }
 
+<<<<<<< HEAD:tab-android-app/app/src/main/java/com/example/Tab_Android/Tab2/NoticeBoardActivity.java
     public static <T> String arrayToString(ArrayList<T> list) {
         Gson g = new Gson();
         return g.toJson(list); }
@@ -99,4 +104,6 @@ public class NoticeBoardActivity extends AppCompatActivity {
         //or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner }
     }
 
+=======
+>>>>>>> 4607231ff78d555050718775c53d630ed00f578b:tab-android-app/app/src/main/java/com/example/Tab_Android/Tab2/ShowBoardActivity.java
 }

@@ -18,8 +18,7 @@
         android:theme="@style/Theme.ViewPagerExample"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".Tab1.OffActivity"></activity>
-        <activity android:name=".Tab1.ArrivalActivity" />
+
         <activity android:name=".LoginGoogleActivity" />
         <activity
             android:name=".MainActivity"
@@ -32,8 +31,8 @@
         </activity>
         <activity android:name=".loginAndSignUP.LoginActivity" />
         <activity android:name=".loginAndSignUP.JoinActivity" />
-        <activity android:name=".Tab2.NoticeBoardActivity" />
-
+        <activity android:name=".Tab2.ShowBoardActivity" />
+        <activity android:name=".Tab2.PostActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
