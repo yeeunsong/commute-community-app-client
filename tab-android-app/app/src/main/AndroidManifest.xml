@@ -20,7 +20,6 @@
         tools:targetApi="m">
         <activity android:name=".Tab1.OffActivity"></activity>
         <activity android:name=".Tab1.ArrivalActivity" />
-        <activity android:name=".Tab1.CommuteActivity" />
         <activity android:name=".LoginGoogleActivity" />
         <activity
             android:name=".MainActivity"
@@ -33,10 +32,8 @@
         </activity>
         <activity android:name=".loginAndSignUP.LoginActivity" />
         <activity android:name=".loginAndSignUP.JoinActivity" />
-<<<<<<< HEAD
-=======
         <activity android:name=".Tab2.NoticeBoardActivity" />
->>>>>>> 783005024f0fcb5eb6412153ed053341cfdae75a
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

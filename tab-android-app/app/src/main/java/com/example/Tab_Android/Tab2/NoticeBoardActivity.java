@@ -97,6 +97,6 @@ public class NoticeBoardActivity extends AppCompatActivity {
         T[] arr = new Gson().fromJson(s, clazz);
         return Arrays.asList(arr);
         //or return Arrays.asList(new Gson().fromJson(s, clazz)); for a one-liner }
-
+    }
 
 }

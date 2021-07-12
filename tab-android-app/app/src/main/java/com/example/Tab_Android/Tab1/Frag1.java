@@ -3,23 +3,17 @@ package com.example.Tab_Android.Tab1;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +21,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.example.Tab_Android.R;
+import com.example.Tab_Android.RetrofitClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -46,14 +46,20 @@ import org.jetbrains.annotations.NotNull;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class Frag1 extends Fragment {
-    // Initialize variable
     boolean isCommuted = false;
     boolean isInRange;
     int totalcommuted = 0;
+    long clicktime;
+
     Button commute_button;
     TextView interval_time;
     TextView commute_time;
@@ -62,30 +68,28 @@ public class Frag1 extends Fragment {
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
 
-    long clicktime;
+    String id = "yeeun";
 
     double lat1 =36.37418, long1 = 127.3659; //Location of the company
     double lat2=0, long2=0; //Location of the user
     double dist; //Distance of the company and the use
+
+    private CommuteAPI commuteAPI;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //Initialize view
+
         View view = inflater.inflate(R.layout.tab1_commute_map, container, false);
-        //Initialize map fragment
+
         supportMapFragment = (SupportMapFragment)
                 getChildFragmentManager().findFragmentById(R.id.google_map);
-        //Initialize fused location
         client = LocationServices.getFusedLocationProviderClient(getActivity());
+        commuteAPI = RetrofitClient.getClient().create(CommuteAPI.class);
 
-        //Check permission
         if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            //when permission granted
-            //call method
             getCurrentLocation();
         }else{
-            //When permission denied
-            //Request permission
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
 
@@ -98,70 +102,59 @@ public class Frag1 extends Fragment {
 
         commute_button.setOnClickListener( new View.OnClickListener() {
             DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
                 if(isInRange){
                     if(!isCommuted){
+                        // Get current time
                         clicktime = System.currentTimeMillis();
-                        Date date = new Date(clicktime);
-                        String commutetime = dateFormat.format(date);
-                        commute_time.setText("출근시각: " + commutetime );
-                        leave_time.setText("퇴근시각: ");
-                        interval_time.setText("총 " + Long.toString(0) + "초 근무했습니다");
+                        Date time = new Date(clicktime);
+                        String commutetime = dateFormat.format(time);
+                        // Get today's date
+                        String date = LocalDate.now().toString();
 
-                        // Start ArrivalActivity
-                        ArrivalPressed();
 
+                        commute_time.setText("Arrival time: " + commutetime );
+                        leave_time.setText("Leave time: ");
+                        interval_time.setText("Total work time " + Long.toString(0) + " hours");
                         isCommuted = true;
                         setButtonUI("Leave", R.color.red);
-                        // Toast.makeText(view.getContext(),"출근 완료",Toast.LENGTH_SHORT).show();
+
+                        ArrivalData arrivalData = new ArrivalData(id, true, commutetime, date);
+                        createArrival(view, arrivalData); // retrofit POST request
                     }
                     else{
                         long temp = clicktime;
                         clicktime = System.currentTimeMillis();
-                        Date tempdate = new Date(temp);
-                        Date date = new Date(clicktime);
-                        long intervaltime = (date.getTime() - tempdate.getTime())/1000+1;
+                        Date temp_time = new Date(temp);
+                        Date time = new Date(clicktime);
 
-                        if(intervaltime <= 1){
-                            // Toast.makeText(view.getContext(),"엥 벌써 퇴근하시게요..?",Toast.LENGTH_SHORT).show();
-                        }
-                        else if(intervaltime > 15){
-                            String string_s = ""+intervaltime;
-                            String total_work = "총 " + Long.toString(intervaltime) + "초 근무했습니다.";
+                        // interval time calculation
+                        long intervaltime = (time.getTime() - temp_time.getTime())/1000+1;
+                        String string_s = ""+intervaltime;
+                        String total_work = "Total work time " + Long.toString(intervaltime) + " hours";
+                        SpannableStringBuilder sp = new SpannableStringBuilder(total_work);
+                        sp.setSpan(new ForegroundColorSpan(Color.parseColor("#006400")), 2, (2+string_s.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                            String toomuchwork = "세상에 " + intervaltime + "초나 일하셨네요...ㄷㄷ";
+                        String leavetime = dateFormat.format(time);
+                        leave_time.setText("Leave time: "+leavetime);
+                        String date = LocalDate.now().toString();
 
-                            SpannableStringBuilder sp = new SpannableStringBuilder(total_work);
-                            sp.setSpan(new ForegroundColorSpan(Color.parseColor("#8B0000")), 2, (2+string_s.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        interval_time.setText(sp);
+                        isCommuted=false;
+                        totalcommute.setText("Total work "+(++totalcommuted)+" days");
+                        setButtonUI("Commute", R.color.green);
 
-                            // Toast.makeText(view.getContext(), toomuchwork ,Toast.LENGTH_SHORT).show();
-                            String leavetime = dateFormat.format(date);
-                            leave_time.setText("퇴근시각: "+leavetime);
-                            interval_time.setText(sp);
-                            isCommuted=false;
-                            totalcommute.setText("총 "+(totalcommuted++)+"회 출근");
-                            setButtonUI("Commute", R.color.green);
-                        }
-                        else{
-                            String string_s = ""+intervaltime;
-                            String total_work = "총 " + Long.toString(intervaltime) + "초 근무했습니다.";
-                            SpannableStringBuilder sp = new SpannableStringBuilder(total_work);
-                            sp.setSpan(new ForegroundColorSpan(Color.parseColor("#006400")), 2, (2+string_s.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        OffData offData = new OffData(id, true, leavetime, Long.toString(intervaltime), date);
+                        createOff(view, offData); // retrofit POST request
 
-                            String leavetime = dateFormat.format(date);
-                            leave_time.setText("퇴근시각: "+leavetime);
-                            interval_time.setText(sp);
-                            isCommuted=false;
-                            totalcommute.setText("총 "+(++totalcommuted)+"회 출근");
-                            setButtonUI("Commute", R.color.green);
-                            // Toast.makeText(view.getContext(),"퇴근 완료",Toast.LENGTH_SHORT).show();
-                        }
+
                     }
                 }
                 else{
-                    Toast.makeText(view.getContext(),"직장과 너무 멀리 있습니다",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(),"Too far from workplace",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -169,6 +162,67 @@ public class Frag1 extends Fragment {
         //Return view
         return view;
     }
+
+
+    /////////////////////////////////////////
+    // METHODS FOR COMMUTE BUTTON PRESSING //
+    /////////////////////////////////////////
+    private void setButtonUI(String text, int color) {
+        commute_button.setText(text);
+        commute_button.setBackgroundColor(ContextCompat.getColor( getActivity(), color));
+    }
+
+
+    private void createArrival(View view, ArrivalData arrivalData) {
+
+        Call<ArrivalData> call = commuteAPI.createArrival(arrivalData);
+
+        call.enqueue(new Callback<ArrivalData>() {
+            @Override
+            public void onResponse(Call<ArrivalData> call, Response<ArrivalData> response) {
+                if (!response.isSuccessful()){
+                    Toast.makeText(view.getContext(), "Response Error: Code "+response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(view.getContext(),"Arrive to work",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<ArrivalData> call, Throwable t) {
+                Toast.makeText(view.getContext(), "Request Failed", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+    private void createOff(View view, OffData offData) {
+
+        Call<OffData> call = commuteAPI.createOff(offData);
+
+        call.enqueue(new Callback<OffData>() {
+            @Override
+            public void onResponse(Call<OffData> call, Response<OffData> response) {
+                if (!response.isSuccessful()){
+                    Toast.makeText(view.getContext(), "Response Error: Code "+response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(view.getContext(),"Leave from work",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<OffData> call, Throwable t) {
+                Toast.makeText(view.getContext(), "Request Failed", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+
+
+    /////////////////////////////////////
+    // METHODS FOR LOCATION ESTIMATION //
+    /////////////////////////////////////
+
 
     private void getCurrentLocation() {
         //Initialize task location
@@ -222,10 +276,6 @@ public class Frag1 extends Fragment {
         });
     }
 
-    private void deleteMarker() {
-    }
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull @NotNull String[] permissions, @NonNull @NotNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -269,11 +319,6 @@ public class Frag1 extends Fragment {
         return (lat1*Math.PI/180.0);
     }
 
-    private void setButtonUI(String text, int color) {
-        commute_button.setText(text);
-        commute_button.setBackgroundColor(ContextCompat.getColor( getActivity(), color));
-    }
-
     private BitmapDescriptor BitmapFromVector(Context context, int vectorResId) {
         // below line is use to generate a drawable.
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
@@ -296,10 +341,6 @@ public class Frag1 extends Fragment {
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    private void ArrivalPressed(){
-        Intent intent = new Intent(getActivity(), ArrivalActivity.class);
-        startActivity(intent);
-    }
 }
 
 

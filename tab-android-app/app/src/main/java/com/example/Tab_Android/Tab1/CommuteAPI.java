@@ -10,6 +10,8 @@ public interface CommuteAPI {
     @POST("arrival")
     Call<ArrivalData> createArrival(@Body ArrivalData arrivalData);
 
-    @GET("test-arrival")
-    Call<ArrivalData> getArrival();
+    @POST("off")
+    Call<OffData> createOff(@Body OffData offData);
+
+
 }
