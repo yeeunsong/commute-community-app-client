@@ -14,7 +14,7 @@ import com.example.Tab_Android.R;
 
 import java.util.ArrayList;
 
-public class ShowPostAdapter extends RecyclerView.Adapter<ShowPostAdapter.CustomViewHolder> {
+public class ShowCommentAdapter extends RecyclerView.Adapter<ShowCommentAdapter.CustomViewHolder>{
     private ArrayList<CommentData> mList;
     private OnItemClickListener onItemClickListener;
 
@@ -23,21 +23,22 @@ public class ShowPostAdapter extends RecyclerView.Adapter<ShowPostAdapter.Custom
     }
 
     public interface OnItemClickListener{
-        void onClick(String name);
+        void onClick(String contents);
     }
 
-    public ShowPostAdapter(ArrayList<CommentData> mSearchData) { this.mList = mSearchData; }
+
+    public ShowCommentAdapter(ArrayList<CommentData> mSearchData) { this.mList = mSearchData; }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
-        protected TextView title;//notice board name
         protected TextView name;//notice board name
+        protected TextView content;//notice board name
         protected TextView datetime;//notice board name
 
         public CustomViewHolder(View view) {
             super(view);
-            this.title = (TextView) view.findViewById(R.id.posttitle);
-            this.name = (TextView) view.findViewById(R.id.postname);
-            this.datetime = (TextView) view.findViewById(R.id.postdate);
+            this.content = (TextView) view.findViewById(R.id.commentcontent);
+            this.name = (TextView) view.findViewById(R.id.commentname);
+            this.datetime = (TextView) view.findViewById(R.id.commentdate);
 
         }
     }
@@ -50,7 +51,7 @@ public class ShowPostAdapter extends RecyclerView.Adapter<ShowPostAdapter.Custom
     public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.tab2_noticeboardlist, viewGroup, false);
+                .inflate(R.layout.tab2_commentlist, viewGroup, false);
 
         CustomViewHolder viewHolder = new CustomViewHolder(view);
 
@@ -61,11 +62,12 @@ public class ShowPostAdapter extends RecyclerView.Adapter<ShowPostAdapter.Custom
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
-        viewholder.title.setOnClickListener(new View.OnClickListener() {
+        viewholder.content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onClick(mList.get(position).getTitle());
+
+                    onItemClickListener.onClick(mList.get(position).getContent());
                 }
             }
         });
@@ -74,6 +76,7 @@ public class ShowPostAdapter extends RecyclerView.Adapter<ShowPostAdapter.Custom
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
+
                     onItemClickListener.onClick(mList.get(position).getName());
                 }
             }
@@ -83,30 +86,28 @@ public class ShowPostAdapter extends RecyclerView.Adapter<ShowPostAdapter.Custom
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
+
                     onItemClickListener.onClick(mList.get(position).getDate());
                 }
             }
         });
 
-        viewholder.title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        viewholder.title.setGravity(Gravity.CENTER);
-        viewholder.title.setText(mList.get(position).getName());
+        viewholder.content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        viewholder.content.setGravity(Gravity.CENTER);
+        viewholder.content.setText(mList.get(position).getContent().replace("\"",""));
 
-        viewholder.name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        viewholder.name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
         viewholder.name.setGravity(Gravity.CENTER);
-        viewholder.name.setText(mList.get(position).getName());
+        viewholder.name.setText(mList.get(position).getName().replace("\"",""));
 
-        viewholder.datetime.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+        viewholder.datetime.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
         viewholder.datetime.setGravity(Gravity.CENTER);
-        viewholder.datetime.setText(mList.get(position).getName());
+        viewholder.datetime.setText(mList.get(position).getDate().replace("\"",""));
 
     }
-
 
     @Override
     public int getItemCount() {
         return (null != mList ? mList.size() : 0);
     }
-
-
 }

@@ -22,25 +22,27 @@
                     android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            >
 
         </activity>
+
         <activity
             android:name=".loginAndSignUP.LoginActivity"
             android:noHistory="true"/>
         <activity
             android:name=".loginAndSignUP.JoinActivity"
             android:noHistory="true" />
-        <activity
-            android:name=".Tab2.ShowBoardActivity"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".Tab2.ShowPostActivity" />
+        <activity android:name=".Tab2.ShowBoardActivity"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".Tab2.ShowPostActivity"
+            android:theme="@style/AppTheme"/>
+
         <activity android:name=".Tab2.WritePostActivity" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"

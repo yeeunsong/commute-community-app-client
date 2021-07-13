@@ -93,15 +93,15 @@ public class ShowBoardAdapter extends RecyclerView.Adapter<ShowBoardAdapter.Cust
 
         viewholder.title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         viewholder.title.setGravity(Gravity.CENTER);
-        viewholder.title.setText(mList.get(position).getTitle());
+        viewholder.title.setText(mList.get(position).getTitle().replace("\"",""));
 
         viewholder.name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
         viewholder.name.setGravity(Gravity.CENTER);
-        viewholder.name.setText(mList.get(position).getName());
+        viewholder.name.setText(mList.get(position).getName().replace("\"",""));
 
         viewholder.datetime.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
         viewholder.datetime.setGravity(Gravity.CENTER);
-        viewholder.datetime.setText(mList.get(position).getDate());
+        viewholder.datetime.setText(mList.get(position).getDate().replace("\"",""));
 
     }
 

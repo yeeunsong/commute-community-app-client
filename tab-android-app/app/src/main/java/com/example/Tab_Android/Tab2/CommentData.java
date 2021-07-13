@@ -1,32 +1,38 @@
 package com.example.Tab_Android.Tab2;
 
 public class CommentData {
-    private String name,title,date;
+    private int postid;
+    private String name,content,date;
+
+    public CommentData(int postid, String name, String content, String date) {
+        this.postid = postid;
+        this.name = name;
+        this.content = content;
+        this.date = date;
+    }
+
+    public int getPostid() {
+        return postid;
+    }
+
+    public void setPostid(int postid) {
+        this.postid = postid;
+    }
 
     public String getName() {
         return name;
-    }
-
-    public CommentData(String name, String title, String date) {
-        this.name = name;
-        this.title = title;
-        this.date = date;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void getName(String name) {
-        this.name = name;
+    public String getContent() {
+        return content;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getDate() {
@@ -36,7 +42,4 @@ public class CommentData {
     public void setDate(String date) {
         this.date = date;
     }
-
 }
-
-

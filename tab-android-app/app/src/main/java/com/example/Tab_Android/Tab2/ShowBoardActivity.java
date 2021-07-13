@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
@@ -20,7 +23,6 @@ import com.example.Tab_Android.RetrofitClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 
 import java.util.ArrayList;
@@ -45,7 +47,6 @@ public class ShowBoardActivity extends AppCompatActivity {
         setContentView(R.layout.tab2_noticeboard);
 
 
-
         String nbname = getIntent().getExtras().getString("nbname");
         context = this.getBaseContext();
         service = RetrofitClient.getClient().create(ServiceApi.class);
@@ -56,10 +57,13 @@ public class ShowBoardActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listView.setLayoutManager(layoutManager);
 
-        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(nbname);
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        /*Toolbar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);*/
 
         contentListAdapter = new ShowBoardAdapter(cItemList);
         listView.setAdapter(contentListAdapter); // 어댑터를 리스트뷰에 세팅
@@ -78,25 +82,25 @@ public class ShowBoardActivity extends AppCompatActivity {
             public void onClick(int postid) {
                 //System.out.println("postid"+postid);
                 Intent intent = new Intent(context, ShowPostActivity.class)
-                        .putExtra("postid",postid);
-                startActivityForResult(intent,1);
+                        .putExtra("postid", postid);
+                startActivityForResult(intent, 1);
             }
         });
         fab_writingpost = (FloatingActionButton) findViewById(R.id.fab_writingpost);
 
-        fab_writingpost.setOnClickListener(new AdapterView.OnClickListener(){
+        fab_writingpost.setOnClickListener(new AdapterView.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, WritePostActivity.class);
-                startActivityForResult(intent,2);
+                startActivityForResult(intent, 2);
             }
         });
 
         init();
     }
 
-    private void init(){
-        GetPostData(new ShowBoardData(0,getIntent().getStringExtra("nbname")));
+    private void init() {
+        GetPostData(new ShowBoardData(0, getIntent().getStringExtra("nbname")));
     }
 
     private void GetPostData(ShowBoardData data) {
@@ -106,13 +110,13 @@ public class ShowBoardActivity extends AppCompatActivity {
                 ShowBoardResponse result = response.body();
                 //Toast.makeText(context, result.getresult().get(0).getClass().getName(), Toast.LENGTH_SHORT).show();
                 Gson gson = new Gson();
-                for(int i=0;i<result.getresult().size();i++){
+                for (int i = 0; i < result.getresult().size(); i++) {
                     JsonObject jsonObject = gson.toJsonTree(result.getresult().get(i)).getAsJsonObject();
                     int postid = (int) Float.parseFloat(jsonObject.get("postid").toString());
                     String userid = jsonObject.get("userid").toString();
                     String title = jsonObject.get("title").toString();
                     String datetime = jsonObject.get("datetime").toString();
-                    cItemList.add(new BoardData(postid,userid,title,datetime));
+                    cItemList.add(new BoardData(postid, userid, title, datetime));
                 }
 
                 contentListAdapter.notifyDataSetChanged();
@@ -129,13 +133,49 @@ public class ShowBoardActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2) {//writing psot
             if (resultCode != Activity.RESULT_OK) {
                 return;
             }
             init();
+        }
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.boardactionbar, menu);
+
+        return true;
+    }
+
+    //추가된 소스, ToolBar에 추가된 항목의 select 이벤트를 처리하는 함수
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                finish();
+                return true;
+            }
+            case R.id.action_search:{
+
+            }
+            case R.id.onlypostbyme:{
+
+            }
+            case R.id.writepost:{
+                Intent intent = new Intent(context, WritePostActivity.class);
+                startActivityForResult(intent, 2);
+            }
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                return super.onOptionsItemSelected(item);
+
         }
     }
 }

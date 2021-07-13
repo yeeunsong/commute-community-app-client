@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.SearchView"
+        app:queryHint="검색어를 입력하시오"
+        android:title="Search"/>
+    <!--<item
+        android:id="@+id/menu_settings"
+        android:title="설정"
+        android:icon="@drawable/ic_baseline_settings_24"
+        app:showAsAction="always" />-->
+
+    <item
+        android:id="@+id/onlypostbyme"
+        android:title="내가 쓴 게시글 보기"
+        app:showAsAction="never"></item>
+    <item
+        android:id="@+id/writepost"
+        android:title="글쓰기"
+        app:showAsAction="never"></item>
+</menu>
