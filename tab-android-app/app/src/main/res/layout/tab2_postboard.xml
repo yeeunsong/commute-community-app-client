@@ -36,22 +36,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="28dp"
-                android:layout_marginBottom="14dp"
+                android:layout_marginTop="16dp"
                 android:text="title"
+                android:textSize="25sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/postimage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="96dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/posttitle"
-                app:srcCompat="@drawable/ic_launcher_background" />
 
             <TextView
                 android:id="@+id/postname"
@@ -74,35 +63,37 @@
                 app:layout_constraintBottom_toTopOf="@+id/postcontent"
                 app:layout_constraintStart_toEndOf="@+id/postname"
                 app:layout_constraintTop_toBottomOf="@+id/posttitle"
-                app:layout_constraintVertical_bias="0.45" />
+                app:layout_constraintVertical_bias="0.243" />
 
             <TextView
                 android:id="@+id/postcontent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="56dp"
                 android:text="content"
-                app:layout_constraintBottom_toTopOf="@+id/postimage"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/posttitle" />
 
             <TextView
                 android:id="@+id/commenttitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="28dp"
+                android:layout_margin="20dp"
+                android:textSize="18sp"
                 android:text="comment"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/postimage" />
+                app:layout_constraintTop_toBottomOf="@+id/postcontent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/commentrecyclerView"
-                android:layout_width="409dp"
-                android:layout_height="477dp"
+
+                android:layout_margin="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
 
-                android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -111,12 +102,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="18dp"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/commentrecyclerView">
+                app:layout_constraintTop_toBottomOf="@+id/commentrecyclerView">
 
                 <EditText
                     android:id="@+id/comment_et"
-                    android:layout_width="324dp"
+                    android:layout_width="320dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#eeeeee"

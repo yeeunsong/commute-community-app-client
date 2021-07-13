@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/posttitle"
-        android:layout_width="85dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="172dp"
         android:gravity="center_horizontal"
@@ -29,13 +29,15 @@
         android:text="title"
         android:textAlignment="center"
         android:textSize="18dp"
+        android:maxLines="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="4"
         app:layout_constraintLeft_toRightOf="@id/postimage"
         app:layout_constraintRight_toLeftOf="@id/postdate"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.473" />
+        app:layout_constraintVertical_bias="0.473"
+        />
 
     <TextView
         android:id="@+id/postdate"

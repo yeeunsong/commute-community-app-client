@@ -69,24 +69,8 @@ public class ShowPostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String comment = writecommentview.getText().toString();
                 WriteCommentData data = new WriteCommentData(postid, UserData.getUserId(),comment,anonymouscheck);
-                System.out.println("test: "+comment);
-                service.writeComment(data).enqueue(new Callback<WriteCommentResponse>() {
-                    @Override
-                    public void onResponse(Call<WriteCommentResponse> call, Response<WriteCommentResponse> response) {
-                        WriteCommentResponse result = response.body();
-                        commentAdapter.notifyDataSetChanged();
-                        Toast.makeText(context, "댓글 작성 성공!", Toast.LENGTH_SHORT).show();
-
-                        //finish();
-                    }
-
-                    @Override
-                    public void onFailure(Call<WriteCommentResponse> call, Throwable t) {
-                        Toast.makeText(context, "댓글 작성 실패", Toast.LENGTH_SHORT).show();
-                        Log.e("댓글 작성 실패", t.getMessage());
-
-                    }
-                });
+                //System.out.println("test: "+comment);
+                WriteComment(data);
             }
         });
 
@@ -154,18 +138,22 @@ public class ShowPostActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ShowCommentResponse> call, Response<ShowCommentResponse> response) {
                 ShowCommentResponse result = response.body();
-                Gson gson = new Gson();
-                for (int i = 0; i < result.getresult().size(); i++) {
-                    JsonObject jsonObject = gson.toJsonTree(result.getresult().get(i)).getAsJsonObject();
-                    int postid = (int) Float.parseFloat(jsonObject.get("postid").toString());
-                    String userid = jsonObject.get("writer").toString().replace("\"","");
-                    String content = jsonObject.get("content").toString().replace("\"","");
-                    String datetime = jsonObject.get("commentdate").toString().replace("\"","");
-                    boolean anonymous = ((int) (Float.parseFloat(jsonObject.get("anonymous").toString())) == 1);
-                    cItemList.add(new CommentData(postid, userid, content, datetime));
+                if(result.getCode() == 200){
+                    Gson gson = new Gson();
+                    for (int i = 0; i < result.getresult().size(); i++) {
+                        JsonObject jsonObject = gson.toJsonTree(result.getresult().get(i)).getAsJsonObject();
+                        int postid = (int) Float.parseFloat(jsonObject.get("postid").toString());
+                        String userid = jsonObject.get("writer").toString().replace("\"","");
+                        String content = jsonObject.get("content").toString().replace("\"","");
+                        String datetime = jsonObject.get("commentdate").toString().replace("\"","");
+                        boolean anonymous = ((int) (Float.parseFloat(jsonObject.get("anonymous").toString())) == 1);
+                        cItemList.add(new CommentData(postid, userid, content, datetime));
+                        commentAdapter.notifyDataSetChanged();
+                    }
+
+
                 }
 
-                commentAdapter.notifyDataSetChanged();
 
                 //finish();
             }
@@ -184,6 +172,7 @@ public class ShowPostActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<WriteCommentResponse> call, Response<WriteCommentResponse> response) {
                 WriteCommentResponse result = response.body();
+
                 //Toast.makeText(context, result.getresult().get(0).toString(), Toast.LENGTH_SHORT).show();
 
                 //cItemList.add(new Data(postid,userid,title,datetime));
@@ -200,6 +189,29 @@ public class ShowPostActivity extends AppCompatActivity {
         });
     }
 
+    public void removepost(DeletePostData data){
+        service.deletePost(data).enqueue(new Callback<DeletePostResponse>() {
+            @Override
+            public void onResponse(Call<DeletePostResponse> call, Response<DeletePostResponse> response) {
+                DeletePostResponse result = response.body();
+                Toast.makeText(context, "게시글이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+
+                //cItemList.add(new Data(postid,userid,title,datetime));
+
+                //finish();
+            }
+
+            @Override
+            public void onFailure(Call<DeletePostResponse> call, Throwable t) {
+                Toast.makeText(context, "삭제 오류", Toast.LENGTH_SHORT).show();
+                Log.e("댓글 작성 오류", t.getMessage());
+
+            }
+        });
+
+    }
+
+
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         MenuInflater menuInflater = getMenuInflater();
@@ -213,33 +225,25 @@ public class ShowPostActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         //return super.onOptionsItemSelected(item);
-
+        int postid = getIntent().getExtras().getInt("postid");
 
         switch (item.getItemId()) {
-            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
-                        finish();
-                        return true;
+            case android.R.id.home: { //toolbar의 back키 눌렀을 때 동작
+                finish();
+                return true;
             }
-            case R.id.action_search:{
-
-            }
-            case R.id.onlypostbyme:{
-
-            }
-            case R.id.writepost:{
-                Intent intent = new Intent(context, WritePostActivity.class);
-                startActivityForResult(intent, 2);
+            case R.id.deletepost:{
+                removepost(new DeletePostData(postid));
             }
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
-                Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return super.onOptionsItemSelected(item);
 
         }
 
 
     }
-
 
 }

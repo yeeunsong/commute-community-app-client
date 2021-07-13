@@ -23,22 +23,8 @@ public interface ServiceApi {
     Call<ShowCommentResponse> getComment(@Body ShowCommentData data);
 
 
-    class DeletePostData{
-        @SerializedName("postid")
-        int postid;
 
-        public DeletePostData(int postid) {
-            this.postid = postid;
-        }
-    }
 
-    class DeletePostResponse{
-        @SerializedName("code")
-        private int code;
 
-        public int getCode() {
-            return code;
-        }
-    }
 }
 

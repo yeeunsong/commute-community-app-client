@@ -45,11 +45,14 @@ public class WritePostActivity extends AppCompatActivity {
 
             boolean anonymous = anonymouscheck.isChecked();
             String username = UserData.getUserId();
+            String nbname = getIntent().getStringExtra("nbname");
+
             //temp for login
 
             @Override
             public void onClick(View v) {
-                startpost(new WritePostData(username,titleView.getText().toString(),contentView.getText().toString(),anonymous));
+                System.out.println("nbname:"+nbname);
+                startpost(new WritePostData(nbname,username,contentView.getText().toString(),titleView.getText().toString(),anonymous));
             }
         });
     }

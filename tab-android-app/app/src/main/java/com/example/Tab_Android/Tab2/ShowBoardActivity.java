@@ -91,7 +91,8 @@ public class ShowBoardActivity extends AppCompatActivity {
         fab_writingpost.setOnClickListener(new AdapterView.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, WritePostActivity.class);
+                Intent intent = new Intent(context, WritePostActivity.class)
+                        .putExtra("nbname",getIntent().getStringExtra("nbname"));;
                 startActivityForResult(intent, 2);
             }
         });
@@ -100,6 +101,7 @@ public class ShowBoardActivity extends AppCompatActivity {
     }
 
     private void init() {
+        System.out.println("tester: "+getIntent().getStringExtra("nbname"));
         GetPostData(new ShowBoardData(0, getIntent().getStringExtra("nbname")));
     }
 
@@ -167,7 +169,8 @@ public class ShowBoardActivity extends AppCompatActivity {
 
             }
             case R.id.writepost:{
-                Intent intent = new Intent(context, WritePostActivity.class);
+                Intent intent = new Intent(context, WritePostActivity.class)
+                        .putExtra("nbname",getIntent().getStringExtra("nbname"));
                 startActivityForResult(intent, 2);
             }
             default:

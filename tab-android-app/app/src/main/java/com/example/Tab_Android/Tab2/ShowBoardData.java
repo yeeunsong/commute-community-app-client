@@ -7,11 +7,11 @@ public class ShowBoardData {
     @SerializedName("number")
     int number;
 
-    @SerializedName("tablekind")
-    String tablekind;
+    @SerializedName("nbname")
+    String nbname;
 
-    public ShowBoardData(int number, String tablekind) {
+    public ShowBoardData(int number, String nbname) {
         this.number = number;
-        this.tablekind = tablekind;
+        this.nbname = nbname;
     }
 }
