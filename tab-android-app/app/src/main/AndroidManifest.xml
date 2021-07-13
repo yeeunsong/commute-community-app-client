@@ -18,7 +18,8 @@
         android:theme="@style/Theme.ViewPagerExample"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".FirstPopupActivity">
+        <activity android:name=".FirstPopupActivity"
+                    android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,12 +31,18 @@
             android:theme="@style/AppTheme">
 
         </activity>
-        <activity android:name=".loginAndSignUP.LoginActivity" />
-        <activity android:name=".loginAndSignUP.JoinActivity" />
+
+        <activity
+            android:name=".loginAndSignUP.LoginActivity"
+            android:noHistory="true"/>
+        <activity
+            android:name=".loginAndSignUP.JoinActivity"
+            android:noHistory="true" />
         <activity android:name=".Tab2.ShowBoardActivity"
             android:theme="@style/AppTheme"/>
         <activity android:name=".Tab2.ShowPostActivity"
             android:theme="@style/AppTheme"/>
+
         <activity android:name=".Tab2.WritePostActivity" />
         <activity android:name=".InfoActivity" />
         <meta-data
