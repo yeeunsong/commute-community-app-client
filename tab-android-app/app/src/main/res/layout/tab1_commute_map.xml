@@ -17,6 +17,7 @@
         android:id="@+id/commute_button"
         style="@style/Widget.MaterialComponents.Button.Icon"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
+        app:iconTint="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/google_map"
