@@ -51,58 +51,8 @@ public class Frag2 extends Fragment {
         mAdapter = new Frag2Adapter(mSearchData);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        textView = v.findViewById(R.id.test);
         service = RetrofitClient.getClient().create(LogSignServiceApi.class);
         postservice = RetrofitClient.getClient().create(ServiceApi.class);
-
-        Button button1 = (Button) v.findViewById(R.id.login);
-        Button button2 = (Button) v.findViewById(R.id.register);
-        Button button3 = (Button) v.findViewById(R.id.logout);
-
-
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //ServerThread thread = new ServerThread();
-                //thread.start();
-                Intent intent = new Intent(getActivity(), com.example.Tab_Android.loginAndSignUP.LoginActivity.class);
-                startActivityForResult(intent,0);
-
-            }
-        });
-
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //ServerThread thread = new ServerThread();
-                //thread.start();
-                Intent intent = new Intent(getActivity(), com.example.Tab_Android.loginAndSignUP.JoinActivity.class);
-                startActivityForResult(intent,1);
-
-            }
-        });
-
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //logout
-                service.userLogout().enqueue(new Callback<LogoutResponse>() {
-                    @Override
-                    public void onResponse(Call<LogoutResponse> call, Response<LogoutResponse> response) {
-                        //LoginResponse result = response.body();
-                        Toast.makeText(getContext(), "로그아웃 성공!", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onFailure(Call<LogoutResponse> call, Throwable t) {
-                        Toast.makeText(getContext(), "로그아웃 에러 발생", Toast.LENGTH_SHORT).show();
-                        Log.e("로그아웃 에러 발생", t.getMessage());
-                    }
-                });
-
-            }
-        });
 
         mAdapter.setOnItemClickListener(new Frag2Adapter.OnItemClickListener() {
             @Override
@@ -110,7 +60,6 @@ public class Frag2 extends Fragment {
                 Intent intent = new Intent(getActivity(), ShowBoardActivity.class)
                         .putExtra("nbname",name);
                 startActivityForResult(intent,0);
-                //Toast.makeText(getActivity(), "되냐?", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -126,9 +75,10 @@ public class Frag2 extends Fragment {
     private void initDataset() {
         //for Test
         mSearchData = new ArrayList<>();
-        mSearchData.add("무슨무슨 게시판");
-        mSearchData.add("이런 저런 게시판");
-        mSearchData.add("아무튼 게시판임");
+        mSearchData.add("우리회사 채용해요");
+        mSearchData.add("회사근처 맛집");
+        mSearchData.add("이직");
+        mSearchData.add("스타트업 라운지");
 
     }
 }
