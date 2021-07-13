@@ -19,6 +19,7 @@ import com.example.Tab_Android.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import user.UserData;
 
 public class WritePostActivity extends AppCompatActivity {
 
@@ -43,7 +44,7 @@ public class WritePostActivity extends AppCompatActivity {
         buttonuploadpost.setOnClickListener(new View.OnClickListener() {
 
             boolean anonymous = anonymouscheck.isChecked();
-            String username = "admin";
+            String username = UserData.getUserId();
             //temp for login
 
             @Override

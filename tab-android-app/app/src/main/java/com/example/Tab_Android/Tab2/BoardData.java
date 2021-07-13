@@ -17,11 +17,9 @@ public class BoardData {
         this.date = date;
     }
 
-
     public int getPostid() {
         return postid;
     }
-
     public void setPostid(int postid) {
         this.postid = postid;
     }

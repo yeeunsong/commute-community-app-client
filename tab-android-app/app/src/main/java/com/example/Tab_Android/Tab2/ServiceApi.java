@@ -17,6 +17,11 @@ public interface ServiceApi {
     Call<WritePostResponse> writePost(@Body WritePostData data);
     @POST("deletepost")
     Call<DeletePostResponse> deletePost(@Body DeletePostData data);
+    @POST("writecomment")
+    Call<WriteCommentResponse> writeComment(@Body WriteCommentData data);
+    @POST("getcomment")
+    Call<ShowCommentResponse> getComment(@Body ShowCommentData data);
+
 
     class DeletePostData{
         @SerializedName("postid")
