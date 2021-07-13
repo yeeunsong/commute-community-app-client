@@ -71,33 +71,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="56dp"
+                android:layout_marginBottom="20dp"
                 android:text="content"
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/posttitle" />
 
-            <TextView
-                android:id="@+id/commenttitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:textSize="18sp"
-                android:text="comment"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/postcontent" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/commentrecyclerView"
 
-                android:layout_margin="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="18dp"
 
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/commenttitle" />
+                app:layout_constraintTop_toBottomOf="@+id/postcontent" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -119,14 +110,16 @@
                     android:id="@+id/anonymous"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:buttonTint="@color/purple_500"
                     android:checked="true"
                     android:text="익명" />
+
                 <Button
                     android:id="@+id/comment_reg"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:padding="8dp"
+                    android:buttonTint="@color/purple_500"
                     android:text="등록하기"/>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
