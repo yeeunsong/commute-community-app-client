@@ -45,9 +45,11 @@ public class CalculateTime {
             suffix = "일 전";
         }else if(getHourDiff(format, oldDate, newDate) > 0){
             date = getHourDiff(format, oldDate, newDate);
+            System.out.println("시간:"+date);
             suffix = "시간 전";
         }else if(getMinutesDiff(format, oldDate, newDate) > 0){
             date = getMinutesDiff(format, oldDate, newDate);
+            System.out.println("분:"+date);
             suffix = "분 전";
         }else{
             date = getMinutesDiff(format, oldDate, newDate);

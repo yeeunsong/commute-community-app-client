@@ -189,7 +189,7 @@ public class ShowPostActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ShowCommentResponse> call, Throwable t) {
-                Toast.makeText(context, "댓글 가져오기 오류", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "댓글 가져오기 오류", Toast.LENGTH_SHORT).show();
                 //Log.e("댓글 가져오기 오류", t.getMessage());
 
             }
