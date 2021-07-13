@@ -69,21 +69,24 @@ public class MainActivity extends AppCompatActivity {
         //return super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.logout:{
+
                 Toast.makeText(getApplicationContext(), "로그아웃되었습니다!", Toast.LENGTH_LONG).show();
-                finish();
+                break;
             }
 
             case R.id.myinfo:{
                 Intent intent = new Intent(context, InfoActivity.class);
+                //Toast.makeText(getApplicationContext(), "info도 클릭됨", Toast.LENGTH_LONG).show();
                 startActivityForResult(intent,0);
+                break;
             }
 
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
-                return super.onOptionsItemSelected(item);
 
         }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -63,6 +63,7 @@ public class WritePostActivity extends AppCompatActivity {
             public void onResponse(Call<WritePostResponse> call, Response<WritePostResponse> response) {
                 WritePostResponse result = response.body();
                 Toast.makeText(context, "글 작성 성공!", Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
                 finish();
             }
 

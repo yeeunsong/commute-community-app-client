@@ -1,7 +1,10 @@
 package com.example.Tab_Android.Tab2;
 
+import android.app.Instrumentation;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,10 +18,12 @@ import android.widget.Toast;
 
 
 import androidx.annotation.RequiresPermission;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.Tab_Android.R;
 import com.example.Tab_Android.RetrofitClient;
@@ -26,7 +31,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +48,7 @@ public class ShowPostActivity extends AppCompatActivity {
     private ServiceApi service;
     private RecyclerView commentRecyclerView; // 리스트뷰
     private ArrayList<CommentData> cItemList = new ArrayList<>();
+    SimpleDateFormat sqlformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
 
     ShowCommentAdapter commentAdapter;
@@ -71,6 +79,17 @@ public class ShowPostActivity extends AppCompatActivity {
                 WriteCommentData data = new WriteCommentData(postid, UserData.getUserId(),comment,anonymouscheck);
                 //System.out.println("test: "+comment);
                 WriteComment(data);
+                init();
+            }
+        });
+
+        SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_post);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                init();
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -95,6 +114,7 @@ public class ShowPostActivity extends AppCompatActivity {
     }
 
     private void init(){
+        cItemList.clear();
         int postid = getIntent().getExtras().getInt("postid");
         //System.out.println(getIntent().getExtras().getInt("postid"));
         GetPostData(new ShowPostData(postid));
@@ -107,14 +127,19 @@ public class ShowPostActivity extends AppCompatActivity {
             public void onResponse(Call<ShowPostResponse> call, Response<ShowPostResponse> response) {
                 ShowPostResponse result = response.body();
                 //Toast.makeText(context, result.getresult().get(0).toString(), Toast.LENGTH_SHORT).show();
+                SimpleDateFormat sqlformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                 Gson gson = new Gson();
                 JsonObject jsonObject = gson.toJsonTree(result.getresult().get(0)).getAsJsonObject();
                 //int postid = (int) Float.parseFloat(jsonObject.get("postid").toString());
                 String userid = jsonObject.get("userid").toString().replace("\"","");
                 String title = jsonObject.get("title").toString().replace("\"","");
-                String datetime = jsonObject.get("datetime").toString().replace("\"","");
+                Date mDate = new Date(System.currentTimeMillis());
+                String target = jsonObject.get("datetime").toString().replace("\"","");
+
+                String datetime =  CalculateTime.caltime(sqlformat,target,sqlformat.format(mDate));
                 String content = jsonObject.get("content").toString().replace("\"","");
                 boolean anonymous = ((int) (Float.parseFloat(jsonObject.get("anonymous").toString())) == 1);
+
 
                 titleview.setText(title);
                 nameview.setText(userid);
@@ -145,7 +170,11 @@ public class ShowPostActivity extends AppCompatActivity {
                         int postid = (int) Float.parseFloat(jsonObject.get("postid").toString());
                         String userid = jsonObject.get("writer").toString().replace("\"","");
                         String content = jsonObject.get("content").toString().replace("\"","");
-                        String datetime = jsonObject.get("commentdate").toString().replace("\"","");
+
+                        Date mDate = new Date(System.currentTimeMillis());
+                        String target = jsonObject.get("commentdate").toString().replace("\"","");
+
+                        String datetime =  CalculateTime.caltime(sqlformat,target,sqlformat.format(mDate));
                         boolean anonymous = ((int) (Float.parseFloat(jsonObject.get("anonymous").toString())) == 1);
                         cItemList.add(new CommentData(postid, userid, content, datetime));
                         commentAdapter.notifyDataSetChanged();
@@ -161,7 +190,7 @@ public class ShowPostActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ShowCommentResponse> call, Throwable t) {
                 Toast.makeText(context, "댓글 가져오기 오류", Toast.LENGTH_SHORT).show();
-                Log.e("댓글 가져오기 오류", t.getMessage());
+                //Log.e("댓글 가져오기 오류", t.getMessage());
 
             }
         });
@@ -233,12 +262,39 @@ public class ShowPostActivity extends AppCompatActivity {
                 return true;
             }
             case R.id.deletepost:{
-                removepost(new DeletePostData(postid));
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("정말 이 글을 삭제하시겠습니까?");
+
+                builder.setPositiveButton("삭제", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        removepost(new DeletePostData(postid));
+                        Toast.makeText(getApplicationContext(), "삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                });
+
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        //Toast.makeText(getApplicationContext(), "Cancel Click", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                positiveButton.setTextColor(Color.parseColor("#FF000000"));
+                negativeButton.setTextColor(Color.parseColor("#FF000000"));
+
+
             }
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
                 return super.onOptionsItemSelected(item);
 
         }

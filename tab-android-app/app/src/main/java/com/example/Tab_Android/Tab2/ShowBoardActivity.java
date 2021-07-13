@@ -25,7 +25,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,7 +41,7 @@ public class ShowBoardActivity extends AppCompatActivity {
     ShowBoardAdapter contentListAdapter;
     private FloatingActionButton fab_writingpost;
     RecyclerView.LayoutManager layoutManager;
-
+    SimpleDateFormat sqlformat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -72,7 +74,8 @@ public class ShowBoardActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                contentListAdapter.notifyDataSetChanged();
+
+                init();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -83,7 +86,7 @@ public class ShowBoardActivity extends AppCompatActivity {
                 //System.out.println("postid"+postid);
                 Intent intent = new Intent(context, ShowPostActivity.class)
                         .putExtra("postid", postid);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, 2);
             }
         });
         fab_writingpost = (FloatingActionButton) findViewById(R.id.fab_writingpost);
@@ -101,7 +104,8 @@ public class ShowBoardActivity extends AppCompatActivity {
     }
 
     private void init() {
-        System.out.println("tester: "+getIntent().getStringExtra("nbname"));
+        cItemList.clear();
+        //System.out.println("tester: "+getIntent().getStringExtra("nbname"));
         GetPostData(new ShowBoardData(0, getIntent().getStringExtra("nbname")));
     }
 
@@ -117,7 +121,11 @@ public class ShowBoardActivity extends AppCompatActivity {
                     int postid = (int) Float.parseFloat(jsonObject.get("postid").toString());
                     String userid = jsonObject.get("userid").toString();
                     String title = jsonObject.get("title").toString();
-                    String datetime = jsonObject.get("datetime").toString();
+                    Date mDate = new Date(System.currentTimeMillis());
+                    String target = jsonObject.get("datetime").toString().replace("\"","");
+
+                    String datetime =  CalculateTime.caltime(sqlformat,target,sqlformat.format(mDate));
+                    System.out.println(jsonObject.get("datetime").toString()+sqlformat.format(mDate));
                     cItemList.add(new BoardData(postid, userid, title, datetime));
                 }
 
@@ -141,6 +149,7 @@ public class ShowBoardActivity extends AppCompatActivity {
             if (resultCode != Activity.RESULT_OK) {
                 return;
             }
+            //System.out.println("이봐 초기화가 안 된거 같은데?");
             init();
         }
     }
@@ -160,25 +169,21 @@ public class ShowBoardActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
                 finish();
-                return true;
+                break;
             }
             case R.id.action_search:{
-
+                break;
             }
             case R.id.onlypostbyme:{
-
+                break;
             }
             case R.id.writepost:{
                 Intent intent = new Intent(context, WritePostActivity.class)
                         .putExtra("nbname",getIntent().getStringExtra("nbname"));
                 startActivityForResult(intent, 2);
+                break;
             }
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                //Toast.makeText(getApplicationContext(), "나머지 버튼 클릭됨", Toast.LENGTH_LONG).show();
-                return super.onOptionsItemSelected(item);
-
         }
+        return super.onOptionsItemSelected(item);
     }
 }
