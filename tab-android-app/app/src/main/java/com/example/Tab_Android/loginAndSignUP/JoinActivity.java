@@ -126,7 +126,7 @@ public class JoinActivity extends AppCompatActivity {
                     finish();
                 }
 
-                Intent intent = new Intent(JoinActivity.this, MainActivity.class);
+                Intent intent = new Intent(JoinActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
 
