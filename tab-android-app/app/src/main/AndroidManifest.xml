@@ -27,7 +27,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            >
+            android:theme="@style/AppTheme">
 
         </activity>
         <activity android:name=".loginAndSignUP.LoginActivity" />
@@ -37,6 +37,7 @@
         <activity android:name=".Tab2.ShowPostActivity"
             android:theme="@style/AppTheme"/>
         <activity android:name=".Tab2.WritePostActivity" />
+        <activity android:name=".InfoActivity" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB529yYfuW1-z2xvQ-x7_AZ9aYFDTctRzk" />

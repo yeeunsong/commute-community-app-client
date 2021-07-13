@@ -7,10 +7,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,14 +31,18 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import user.UserData;
 
 public class ShowPostActivity extends AppCompatActivity {
     Context context;
-    TextView titleview, nameview, dateview, contentview;
+    TextView titleview, nameview, dateview, contentview, writecommentview;
+    Button button_reg;
 
     private ServiceApi service;
     private RecyclerView commentRecyclerView; // 리스트뷰
     private ArrayList<CommentData> cItemList = new ArrayList<>();
+
+
     ShowCommentAdapter commentAdapter;
     RecyclerView.LayoutManager layoutManager;
 
@@ -48,6 +56,39 @@ public class ShowPostActivity extends AppCompatActivity {
         nameview = (TextView)findViewById(R.id.postname);
         dateview = (TextView)findViewById(R.id.postdate);
         contentview = (TextView)findViewById(R.id.postcontent);
+        writecommentview = (TextView)findViewById(R.id.comment_et);
+        CheckBox anonymous = (CheckBox) findViewById(R.id.anonymous);
+
+        boolean anonymouscheck = anonymous.isChecked();
+        int postid = getIntent().getExtras().getInt("postid");
+
+        Button button_reg = (Button) findViewById(R.id.comment_reg);
+
+        button_reg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String comment = writecommentview.getText().toString();
+                WriteCommentData data = new WriteCommentData(postid, UserData.getUserId(),comment,anonymouscheck);
+                System.out.println("test: "+comment);
+                service.writeComment(data).enqueue(new Callback<WriteCommentResponse>() {
+                    @Override
+                    public void onResponse(Call<WriteCommentResponse> call, Response<WriteCommentResponse> response) {
+                        WriteCommentResponse result = response.body();
+                        commentAdapter.notifyDataSetChanged();
+                        Toast.makeText(context, "댓글 작성 성공!", Toast.LENGTH_SHORT).show();
+
+                        //finish();
+                    }
+
+                    @Override
+                    public void onFailure(Call<WriteCommentResponse> call, Throwable t) {
+                        Toast.makeText(context, "댓글 작성 실패", Toast.LENGTH_SHORT).show();
+                        Log.e("댓글 작성 실패", t.getMessage());
+
+                    }
+                });
+            }
+        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.posttoolbar);
 
@@ -70,9 +111,10 @@ public class ShowPostActivity extends AppCompatActivity {
     }
 
     private void init(){
+        int postid = getIntent().getExtras().getInt("postid");
         //System.out.println(getIntent().getExtras().getInt("postid"));
-        GetPostData(new ShowPostData(getIntent().getExtras().getInt("postid")));
-        GetComment(new ShowCommentData(getIntent().getExtras().getInt("postid")));
+        GetPostData(new ShowPostData(postid));
+        GetComment(new ShowCommentData(postid));
     }
 
     private void GetPostData(ShowPostData data) {

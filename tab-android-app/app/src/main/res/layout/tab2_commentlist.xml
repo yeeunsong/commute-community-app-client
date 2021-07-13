@@ -1,69 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    tools:context=".Tab2.Frag2">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:padding="16dp"
+android:layout_margin="16dp"
+android:background="#eeeeee"
+android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/commentimage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:padding="3dp"
-        android:layout_marginStart="10dp"
-        android:src="@mipmap/ic_launcher"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/commentname"
-        android:layout_width="85dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:padding="5dp"
-        android:text="name"
-        android:textAlignment="center"
-        android:textSize="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_weight="4"
-        app:layout_constraintLeft_toRightOf="@id/commentimage"
-        app:layout_constraintRight_toLeftOf="@id/commentcontent"
-        app:layout_constraintStart_toEndOf="@+id/commentimage"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01" />
-
-    <TextView
-        android:id="@+id/commentcontent"
-        android:layout_width="85dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center_horizontal"
-        android:padding="5dp"
-        android:text="content"
-        android:textAlignment="center"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_weight="4"
-        app:layout_constraintStart_toEndOf="@+id/commentimage"
-        app:layout_constraintTop_toBottomOf="@+id/commentname" />
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:text="userid" />
 
     <TextView
         android:id="@+id/commentdate"
-        android:layout_width="85dp"
+        android:gravity="right"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center_horizontal"
-        android:padding="5dp"
-        android:text="date"
-        android:textAlignment="center"
-        android:textSize="8dp"
-        app:layout_constraintStart_toEndOf="@+id/commentname"
-        app:layout_constraintHorizontal_weight="4"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_weight="1"
+        android:text="date" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
+
+<TextView
+    android:id="@+id/commentcontent"
+    android:layout_width="match_parent"
+    android:textColor="#333333"
+    android:layout_height="wrap_content"
+    android:text="content" />
+<View
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:layout_margin="16dp"
+    android:background="#000000"
+    />
+</LinearLayout>
