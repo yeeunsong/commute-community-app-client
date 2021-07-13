@@ -6,5 +6,5 @@
     <item
         android:id="@+id/deletepost"
         android:title="삭제"
-        app:showAsAction="never"></item>
+        app:showAsAction="never"/>
 </menu>

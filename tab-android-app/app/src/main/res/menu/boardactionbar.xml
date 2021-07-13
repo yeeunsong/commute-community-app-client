@@ -10,18 +10,14 @@
         app:actionViewClass="android.widget.SearchView"
         app:queryHint="검색어를 입력하시오"
         android:title="Search"/>
-    <!--<item
-        android:id="@+id/menu_settings"
-        android:title="설정"
-        android:icon="@drawable/ic_baseline_settings_24"
-        app:showAsAction="always" />-->
+
 
     <item
         android:id="@+id/onlypostbyme"
         android:title="내가 쓴 게시글 보기"
-        app:showAsAction="never"></item>
+        app:showAsAction="never"/>
     <item
         android:id="@+id/writepost"
         android:title="글쓰기"
-        app:showAsAction="never"></item>
+        app:showAsAction="never"/>
 </menu>
