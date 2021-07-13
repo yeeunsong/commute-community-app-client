@@ -77,8 +77,11 @@ public class Frag2 extends Fragment {
         mSearchData = new ArrayList<>();
         mSearchData.add("우리회사 채용해요");
         mSearchData.add("회사근처 맛집");
-        mSearchData.add("이직");
+        mSearchData.add("이직/커리어");
+        mSearchData.add("게임");
         mSearchData.add("스타트업 라운지");
+        mSearchData.add("자동차");
+        mSearchData.add("여행");
 
     }
 }
