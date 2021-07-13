@@ -13,7 +13,13 @@ Also, COMCOM integrated Google login SDK for SNS login.
 Features include:   
 * Creating an account  
 * Verify Login
-* Login via Google login SDK
+* Login via Google login SDK 
+
+Login via Google SDK    
+<img src="https://user-images.githubusercontent.com/49232148/125485309-ce95a76a-6d98-4fe9-9298-c5333401c5ef.gif" width="400" height="800">
+
+Custom user login   
+<img src="https://user-images.githubusercontent.com/49232148/125485295-9d43a8af-a713-4c84-a80e-0a2e3723dfe3.gif" width="400" height="800">
 
 ### 2. Commute Checking
 Page that enables to check commute via app.    
@@ -24,7 +30,7 @@ Features include:
 * Calculate the distance of the user and the company   
 * Calculate hours of duty using the commute button 
 * Send commute status to database on pressing commute button
-
+<img src="https://user-images.githubusercontent.com/49232148/125485316-fd64e1cf-70e4-4011-9e3d-748e375c8766.gif" width="400" height="800">
    
 
 ### 3. Community Interface  
