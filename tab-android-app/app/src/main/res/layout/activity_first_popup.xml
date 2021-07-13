@@ -81,7 +81,7 @@
 
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <com.google.android.gms.common.SignInButton
@@ -99,6 +99,48 @@
                 android:layout_gravity="center"
                 android:src="@drawable/google_icon"
                 android:id="@+id/btn_google" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/kakaoSignInButton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"/>
+
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/kakaotalk_128"
+                android:id="@+id/btn_kakao" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/naverSignInButton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"/>
+
+
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/naver"
+                android:id="@+id/btn_naver" />
         </FrameLayout>
     </LinearLayout>
 

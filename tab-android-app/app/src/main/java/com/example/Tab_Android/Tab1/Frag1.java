@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +49,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -58,14 +61,12 @@ import user.UserData;
 public class Frag1 extends Fragment {
     boolean isCommuted = false;
     boolean isInRange;
-    int totalcommuted = 0;
     long clicktime;
 
     Button commute_button;
     TextView interval_time;
     TextView commute_time;
     TextView leave_time;
-    TextView totalcommute;
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
 
@@ -99,7 +100,8 @@ public class Frag1 extends Fragment {
         interval_time = (TextView) view.findViewById(R.id.interval_time);
         commute_time = (TextView) view.findViewById(R.id.commute_time);
         leave_time = (TextView) view.findViewById(R.id.leave_time);
-        totalcommute = (TextView) view.findViewById(R.id.totalcommute);
+
+
 
         commute_button.setOnClickListener( new View.OnClickListener() {
             DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -136,16 +138,12 @@ public class Frag1 extends Fragment {
                         long intervaltime = (time.getTime() - temp_time.getTime())/1000+1;
                         String string_s = ""+intervaltime;
                         String total_work = "Total work time " + Long.toString(intervaltime) + " hours";
-                        SpannableStringBuilder sp = new SpannableStringBuilder(total_work);
-                        sp.setSpan(new ForegroundColorSpan(Color.parseColor("#006400")), 2, (2+string_s.length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                         String leavetime = dateFormat.format(time);
                         leave_time.setText("Leave time: "+leavetime);
                         String date = LocalDate.now().toString();
 
-                        interval_time.setText(sp);
                         isCommuted=false;
-                        totalcommute.setText("Total work "+(++totalcommuted)+" days");
                         setButtonUI("Commute", R.color.green);
 
                         OffData offData = new OffData(id, true, leavetime, Long.toString(intervaltime), date);
