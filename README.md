@@ -41,6 +41,7 @@ Features include:
 Utilized NodeJS, Express, and MySQL.   
    
 MySQL database schema: 
+   
 ![image](https://user-images.githubusercontent.com/49232148/125463808-7360b3ab-7bc8-498f-a896-eaaa8fc63beb.png) 
 
 
