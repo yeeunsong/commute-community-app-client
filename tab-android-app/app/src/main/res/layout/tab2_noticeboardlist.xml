@@ -26,7 +26,7 @@
         android:layout_marginEnd="172dp"
         android:gravity="center_horizontal"
         android:padding="5dp"
-        android:text="title"
+        android:text="개발자 살려줘 응애 응애 "
         android:textAlignment="center"
         android:textSize="18dp"
         android:maxLines="1"
