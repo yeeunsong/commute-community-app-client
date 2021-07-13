@@ -7,6 +7,7 @@
         android:id="@+id/action_search"
         android:icon="@android:drawable/ic_menu_search"
         app:showAsAction="always"
+        android:iconTint="@color/white"
         app:actionViewClass="android.widget.SearchView"
         app:queryHint="검색어를 입력하시오"
         android:title="Search"/>
