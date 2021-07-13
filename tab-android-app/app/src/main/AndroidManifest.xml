@@ -11,7 +11,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/customlogo_square"
+        android:icon="@drawable/customlogo_square_centered"
         android:label="ComCom"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
