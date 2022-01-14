@@ -16,7 +16,7 @@ Can save newly created accounts and verify login.
 Features include:   
 * Creating an account  
 * Verifying login
-* Login via Google login SDK 
+* SNS login (ex. Google)
 
    
 <img src="https://user-images.githubusercontent.com/49232148/125485309-ce95a76a-6d98-4fe9-9298-c5333401c5ef.gif" width="400" height="800">
