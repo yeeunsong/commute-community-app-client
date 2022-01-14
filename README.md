@@ -10,7 +10,7 @@ Features include:
 **Code for the server** is here: https://github.com/yeeunsong/commute-community-app-server
    
 ## Android Explanation
-### 1. Login and Making an Account
+### 1. Register and Login
 Can save newly created accounts and verify login.   
 
 Features include:   
