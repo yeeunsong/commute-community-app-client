@@ -29,9 +29,9 @@ The user can press the commute button if the user is within 100m distance from t
 Features include: 
 * Integration with **Google Map API**   
 * Getting and updating current location   
-* Calculate the distance of the user and the company   
-* Calculate hours of duty using the commute button 
-* Send commute status to database on pressing commute button
+* Calculating the distance of the user and the company   
+* Calculating hours of duty using the commute button 
+* Sending commute status to database on pressing commute button
 
 <img src="https://user-images.githubusercontent.com/49232148/125485316-fd64e1cf-70e4-4011-9e3d-748e375c8766.gif" width="400" height="800">
    
