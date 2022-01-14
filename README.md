@@ -48,7 +48,7 @@ Features include:
      
       
 ## Server Explanation  
-Utilized NodeJS, Express, and MySQL.   
+Utilized Node.js, Express, and MySQL.   
    
 MySQL database schema: 
    
